@@ -12,7 +12,7 @@ export default function Blog({ post, allPosts }) {
         <meta name="description" content={post.subTitle} />
       </Head>
       <div>
-        <ContentView post={post} />
+        <ContentView key={post.title} post={post} />
         {/* <Comments postId={post._id} /> */}
         <MoreArticles articles={allPosts} />
       </div>

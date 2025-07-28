@@ -14,7 +14,7 @@ const ArticleCard = ({
   publishedDate,
 }) => {
   return (
-    <Link href={href} className="w-full bg-black bg-opacity-90 group">
+    <Link href={href} className="w-full  group">
       <div className="relative w-full h-52  overflow-hidden">
         {img?.src && (
           <Image

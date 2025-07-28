@@ -13,6 +13,7 @@ import Loader from "@/components/Loader";
 import Head from "next/head";
 import { textToUrl } from "@/utils/helpers";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 
 let numOfBlogsToLoad = 6;
 
@@ -87,20 +88,33 @@ const Blogs = ({ posts, allCategories, numOfBlogs }) => {
           {loading ? (
             <Loader />
           ) : (
-            allBlogs.map((article) => (
-              <ArticleCard
+            allBlogs.map((article, idx) => (
+              <motion.div
                 key={article.id}
-                title={article.title}
-                description={article.subTitle}
-                img={{ src: article.mainImage, alt: article.title + " image" }}
-                href={`/blogs/${textToUrl(article.categories[0].title)}/${article.slug}`}
-                categories={article.categories}
-                author={{
-                  name: article.author.name,
-                  image: article.author.image,
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: (idx % allBlogs.length) * 0.2,
                 }}
-                publishedDate={article.publishedAt}
-              />
+                viewport={{ once: true }}
+              >
+                <ArticleCard
+                  title={article.title}
+                  description={article.subTitle}
+                  img={{
+                    src: article.mainImage,
+                    alt: article.title + " image",
+                  }}
+                  href={`/blogs/${textToUrl(article.categories[0].title)}/${article.slug}`}
+                  categories={article.categories}
+                  author={{
+                    name: article.author.name,
+                    image: article.author.image,
+                  }}
+                  publishedDate={article.publishedAt}
+                />
+              </motion.div>
             ))
           )}
         </div>

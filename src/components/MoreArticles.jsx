@@ -4,6 +4,7 @@ import ArticleCard from "./ArticleCard";
 import { libre } from "@/app/fonts/fonts";
 import Link from "next/link";
 import { textToUrl } from "@/utils/helpers";
+import { motion } from "framer-motion";
 
 const MoreArticles = ({ articles }) => {
   return (
@@ -18,14 +19,22 @@ const MoreArticles = ({ articles }) => {
         Read More Blog posts
       </h4>
       <div className="max-w-screen-lg mx-auto flex flex-col lg:grid grid-cols-3 gap-4">
-        {articles.slice(0, 3).map((article) => (
-          <ArticleCard
+        {articles.slice(0, 3).map((article, ind) => (
+          <motion.div
             key={article.id}
-            title={article.title}
-            description={article.subTitle}
-            img={{ src: article.mainImage, alt: article.title + " img" }}
-            href={`/blogs/${textToUrl(article.categories[0].title)}/${article.slug}`}
-          />
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: (ind % articles.length) * 0.2, duration: 0.5 }}
+            viewport={{ once: true, amount: 0.2 }}
+            className="bg-black bg-opacity-90"
+          >
+            <ArticleCard
+              title={article.title}
+              description={article.subTitle}
+              img={{ src: article.mainImage, alt: article.title + " img" }}
+              href={`/blogs/${textToUrl(article.categories[0].title)}/${article.slug}`}
+            />
+          </motion.div>
         ))}
       </div>
       <Link
