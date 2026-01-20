@@ -36,10 +36,22 @@ const Header = ({ className }) => {
             alt="user icon"
           />
         </Link> */}
-        <Link href="/blogs" className="text-grey-light self-center ms-auto">
+        <Link
+          href="/journal"
+          className="text-grey-light self-center ms-auto hover:underline"
+        >
+          Daily Journals
+        </Link>
+        <Link
+          href="/blogs"
+          className="text-grey-light self-center ms-6 hover:underline"
+        >
           Blogs
         </Link>
-        <Link href="/contact-us" className="text-grey-light self-center ms-6">
+        <Link
+          href="/contact-us"
+          className="text-grey-light self-center ms-6 hover:underline"
+        >
           Contact us
         </Link>
       </motion.div>
