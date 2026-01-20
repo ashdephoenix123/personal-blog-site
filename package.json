@@ -30,6 +30,7 @@
     "sanity": "^3.59.0",
     "sanity-plugin-media": "^2.3.2",
     "sharp": "^0.33.5",
+    "slugify": "^1.6.6",
     "styled-components": "^6.1.13",
     "yup": "^1.4.0"
   },

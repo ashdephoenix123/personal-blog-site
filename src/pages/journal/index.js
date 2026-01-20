@@ -17,10 +17,11 @@ import { motion } from "framer-motion";
 import JournalCard from "@/components/JournalCard";
 import Modal from "@/components/Modal";
 import { journals } from "@/database/content";
+import { fetchJournals } from "@/sanity/queries/fetchJournals";
 
 let numOfBlogsToLoad = 6;
 
-const Journal = ({ posts, numOfBlogs }) => {
+const Journal = ({ posts, numOfBlogs, journals }) => {
   const router = useRouter();
   const [allBlogs, setAllBlogs] = useState(posts);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -73,6 +74,19 @@ const Journal = ({ posts, numOfBlogs }) => {
     }
   };
 
+  const writeJournal = async () => {
+    await fetch("/api/journal/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: "akash",
+        description: "hello world",
+      }),
+    });
+  };
+
   return (
     <>
       <Head>
@@ -86,6 +100,7 @@ const Journal = ({ posts, numOfBlogs }) => {
         <div className="flex gap-4 items-center">
           <h1 className={`text-4xl ${libre.className}`}>My Daily Updates</h1>
         </div>
+        <button onClick={writeJournal}>Hit me</button>
         <div className="mx-auto flex flex-col lg:grid grid-cols-5 gap-4 my-12">
           {loading ? (
             <Loader />
@@ -103,7 +118,7 @@ const Journal = ({ posts, numOfBlogs }) => {
               >
                 <JournalCard
                   title={article.title}
-                  description={article.body}
+                  description={article.description}
                   action={() => openModal(article)}
                 />
               </motion.div>
@@ -124,19 +139,21 @@ const Journal = ({ posts, numOfBlogs }) => {
         isOpen={!!modal}
         onClose={() => setModal(null)}
         title={modal?.title}
-        content={modal?.body}
+        content={modal?.description}
       />
     </>
   );
 };
 
 export async function getServerSideProps() {
-  const [posts, numOfBlogs, allCategories] = await Promise.all([
+  const [posts, numOfBlogs, allCategories, journals] = await Promise.all([
     fetchAllPost(0, numOfBlogsToLoad),
     fetchPostsLength(null),
     fetchAllCategories(),
+    fetchJournals(),
   ]);
-  return { props: { posts, allCategories, numOfBlogs } };
+
+  return { props: { posts, allCategories, numOfBlogs, journals } };
 }
 
 export default Journal;
