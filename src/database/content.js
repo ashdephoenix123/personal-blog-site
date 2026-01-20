@@ -29,7 +29,10 @@ export const journals = [
   {
     id: 2,
     title: "Jan 18",
-    body: "Lorem, ipsum dolor sit amet consectetur ads.",
+    body: `I learned that -
+1. I learned about Hooks and React components
+2. I learned that nothing is permanent
+3. I learned that `,
   },
   {
     id: 3,
